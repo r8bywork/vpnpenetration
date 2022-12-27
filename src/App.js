@@ -1,8 +1,12 @@
+import Menubars from "./components/menubars";
 import Table from "./components/table";
 
 const App = () => {
   return (
-    <Table/>    
+    <div>
+      <Menubars/>
+      <Table/>    
+    </div>
   );
 };
 
