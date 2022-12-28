@@ -42,6 +42,7 @@ const Login = () => {
   };
 
   return (
+    <div className="wrapper">
     <form onSubmit={handleSubmit} className="popa">
       <label htmlFor="username">Username:</label>
       <InputText
@@ -59,6 +60,7 @@ const Login = () => {
 
       <Button type="submit" label="Login" />
     </form>
+    </div>
   );
 };
 
