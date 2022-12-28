@@ -1,13 +1,16 @@
 import Login from "./components/login";
-import Menubars from "./components/menubars";
 import Table from "./components/table";
+import { ToastContainer, toast } from "react-toastify";
+import { Route, Router, Routes, Navigate } from "react-router-dom";
 
 const App = () => {
   return (
-    <div style={{display:"flex"}}>
-      <Login/>
-      {/* <Menubars/>
-      <Table/>     */}
+    <div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/table" element={<Table />} />
+      </Routes>
+      <ToastContainer />
     </div>
   );
 };

@@ -2,37 +2,45 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import { useState } from "react";
-import './Login.css'
+import "./Login.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const loginFunc = () => toast("Successfully logged in ", username);
+  const fakePaswFunc = () => toast("Check your password or login");
+  const errorFunc = () => toast("Error");
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username)
-    console.log(password)
-    fetch('http://45.8.146.72:24678/auth/login', {
-      method: 'POST',
+    fetch("http://45.8.146.72:24678/auth/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (response.ok) {
-          // username was successful, redirect to the dashboard or show a success message
-          console.log("good")
+          loginFunc();
+          const json = await response.json();
+          localStorage.setItem("token", json.accessToken);
+          navigate("/table");
         } else {
-          // username was unsuccessful, show an error message
-          console.log("idi naxui")
+          fakePaswFunc();
         }
       })
       .catch((error) => {
-        console.log(error)
-        // There was an error connecting to the backend, show an error message
+        errorFunc();
       });
   };
+
   return (
     <form onSubmit={handleSubmit} className="popa">
       <label htmlFor="username">Username:</label>

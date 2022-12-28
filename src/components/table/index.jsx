@@ -5,16 +5,20 @@ import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 import axios from "axios";
 import { useEffect } from "react";
+import Menubars from "../menubars";
 
 const Table = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://172.20.10.2:24678/table", {})
+      .get("http://45.8.146.72:24678/table", {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem('token')
+        }
+      })
       .then((response) => setData(response.data));
   }, []);
-  console.log(data)
   let headerGroup = (
     <ColumnGroup>
       <Row>
@@ -27,9 +31,10 @@ const Table = () => {
       </Row>
     </ColumnGroup>
   );
-  
+
   return (
     <div>
+      <Menubars/>
       <DataTable
         value={data}
         paginator
